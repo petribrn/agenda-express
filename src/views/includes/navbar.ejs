@@ -2,7 +2,20 @@
     <div class="container-fluid">
         <a class="navbar-brand light" href="/">Agenda</a>
         <ul class="nav ms-auto">
-            <li class="nav-item"><a href="/login" class="nav-link link-light">Login/Register</a></li>
+
+            <li class="nav-item">
+                <a href="/contact" class="nav-link link-light">Add contact</a>
+            </li>
+
+            <% if(!user) {%> 
+                <li class="nav-item">
+                    <a href="/login" class="nav-link link-light">Login/Register</a>
+                </li>
+            <% } else { %>
+                <li class="nav-item">
+                    <a href="/logout" class="nav-link link-danger">Logout</a>
+                </li>
+            <% } %> 
         </ul>
     </div>
 </nav>

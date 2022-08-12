@@ -19,6 +19,7 @@ const path = require('path');
 const csrf = require('csurf');
 const {globalMiddleware} = require('./src/middlewares/globalMiddlewares');
 const {checkCsrfError, csrfMiddleware} = require('./src/middlewares/csrfMiddlewares');
+const {userSession} = require('./src/middlewares/userSessionMiddleware');
 
 //----Middlewares section----
 app.use(express.json());
@@ -34,6 +35,7 @@ app.set('view engine', 'ejs'); // set view engine
 // ----Own middlewares----
 // Every requisition will go through these created middlewares.
 app.use(globalMiddleware);
+app.use(userSession);
 app.use(csrfMiddleware); 
 app.use(checkCsrfError);
 

@@ -9,18 +9,38 @@ const LoginSchema = new mongoose.Schema({
 
 const LoginModel = mongoose.model('Login', LoginSchema);
 
-class HandleLogin{
+class Auth{
     constructor(body){
         this.body = body;
         this.errors = [];
         this.user = null;
     }
 
-    async register(){
+    async login(){
         this.validateLogin();
         if(this.errors.length > 0) return;
+        this.user = await this.userExists();
 
-        if(await this.userExists()) return;
+        if(!this.user) {
+            this.errors.push('E-mail is not connected to any account. Find your account and try again.');
+            return;
+        }
+        if(!await bcryptjs.compare(this.body.password, this.user.password)){
+            this.errors.push('Invalid password. Please try again.');
+            this.user = null;
+            return;
+        }
+    }
+
+    async register(){
+        this.validateRegister();
+
+        if(await this.userExists()) {
+            this.errors.push("An account is already registered with that email.");
+            return;
+        }
+
+        if(this.errors.length > 0) return;
 
         const salt = await bcryptjs.genSalt(5);
         this.body.password = await bcryptjs.hash(this.body.password, salt);
@@ -33,14 +53,11 @@ class HandleLogin{
 
     async userExists(){
         const user = await LoginModel.findOne({email: this.body.email});
-        if(user) {
-            this.errors.push("An account is already registered with that email.");
-            return true;
-        }
+        if(user) return user;
         return false;
     }
 
-    validateLogin(){
+    async validateRegister(){
         this.cleanUp();
 
         if(!this.body.email && !this.body.password){
@@ -59,6 +76,16 @@ class HandleLogin{
         };
     }
 
+    validateLogin(){
+        this.cleanUp();
+
+        if(!this.body.email && !this.body.password){
+            this.errors.push('You must enter e-mail and password to continue.');
+            return;
+        }
+        if(!validator.isEmail(this.body.email)) this.errors.push('Invalid E-mail.');
+    }
+
     cleanUp(){
         for(let key in this.body){
             if(typeof this.body[key] !== 'string'){
@@ -66,12 +93,19 @@ class HandleLogin{
             }
         }
 
+        if(!this.body.repeatPassword){
+            this.body = {
+                email: this.body.email,
+                password: this.body.password,
+            };
+            return;
+        }
         this.body = {
-            email: this.body.createEmail,
-            password: this.body.createPassword,
-            repeatPassword: this.body.repeatCreatePassword
+            email: this.body.email,
+            password: this.body.password,
+            repeatPassword: this.body.repeatPassword
         };
     }
 }
 
-module.exports = HandleLogin;
+module.exports = Auth;
