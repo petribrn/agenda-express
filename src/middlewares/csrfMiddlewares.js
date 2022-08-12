@@ -1,8 +1,9 @@
 // Checks CSRF error and renders 404 page.
 exports.checkCsrfError = (err, req, res, next) => {
-    if(err && err.code === 'EBADCSRFTOKEN'){
+    if(err){
         return res.render('404');
     }
+    next();
 };
 
 // Add csrf token to every input.

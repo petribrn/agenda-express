@@ -1,0 +1,53 @@
+<%- include('includes/head');  %> 
+<%- include('includes/navbar'); %> 
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-center flex-column align-items-center">
+        <div class="col-8 mt-3">
+            <p class="h1 text-center">Login/Register</p>
+            <p class="text-center lead">Sign In or Sign Up by creating an account.</p>
+        </div>
+
+        <%- include('includes/messages') %> 
+
+        <div class="d-flex w-100 justify-content-center flex-wrap mt-3">
+                <div class="col-md-4 m-2">
+                    <form action="/login/sign-in" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken  %>">
+                        <p class="h2">Sing In</p>
+                        <div class="mb-3">
+                            <label for="signInEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="signInEmail" name="signInEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label for="signInPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="signInPassword" name="signInPassword">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="signInButton">Sign In</button>
+                    </form>
+                </div>
+                <div class="col-md-4 m-2">
+                    <form action="/login/register" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken  %>">
+                        <p class="h2">Create account</p>
+                        <div class="mb-3">
+                            <label for="createEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="createEmail" name="createEmail" aria-describedby="emailHelp">
+                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="createPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="createPassword" name="createPassword">
+                        </div>
+                        <div class="mb-3">
+                            <label for="repeatCreatePassword" class="form-label">Repeat Password</label>
+                            <input type="password" class="form-control" id="repeatCreatePassword" name="repeatCreatePassword">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="createAccountButton">Create account</button>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
+
+<%- include('includes/footer');  %> 
