@@ -36,21 +36,21 @@ class Contact {
     validateInputs(){
         this.cleanUp();
 
+        if(!this.body.email && !this.body.phoneNumber){
+            this.errors.push('A contact must have an e-mail or a phone number.');
+        }
+
         if(this.body.email && !validator.isEmail(this.body.email)) {
             this.errors.push('Invalid E-mail.');
         }
-
-        // if(this.body.phoneNumber && !validator.isMobilePhone(this.body.phoneNumber)){
-        //     this.errors.push('Invalid Phone number.')
-        // }
 
         if(!this.body.firstName){
             this.errors.push('Name is a required field.');
         }
 
-        if(!this.body.email && !this.body.phoneNumber){
-            this.errors.push('A contact must have an E-mail or a phone number.');
-        }
+        // if(this.body.phoneNumber && !validator.isMobilePhone(this.body.phoneNumber)){
+        //     this.errors.push('Invalid Phone number.')
+        // }
         
     }
 
