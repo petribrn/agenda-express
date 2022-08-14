@@ -12,9 +12,9 @@
         
         <div class="col-md-4 m-2">
         <% if(contact._id){ %> 
-            <form action="/contact/edit/<%= contact._id  %> " method="POST">
+            <form action="/contact/edit/<%= contact._id  %> " method="POST" class="contact-form">
         <% } else { %>
-            <form action="/contact/save-contact" method="POST">
+            <form action="/contact/save-contact" method="POST" class="contact-form">
         <% } %> 
                 <input type="hidden" name="_csrf" value="<%= csrfToken  %>">
                 <div class="mb-3">
