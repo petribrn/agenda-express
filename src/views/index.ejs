@@ -8,25 +8,43 @@
             <p class="text-center lead">Your contacts are displayed below.</p>
         </div>
 
-        <%- include('includes/messages') %> 
+        <%- include('includes/messages') %>
 
-        <div class="responsive-table col-6 mt-3">
-            <table class="table">
-                <thead>
+        <% if(!user){ %> 
+            <div class="col-8 mt-5">
+                <p class="text-center lead fw-bold">You have to login/create account to access your contacts.</p>
+            </div>
+        <% } else if(contacts && contacts.length > 0) { %>
+            <div class="responsive-table col-8 mt-3">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Number</th>
+                        <th scope="col">E-mail</th>
+                        <th></th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <% contacts.forEach(contact => { %> 
                     <tr>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Number</th>
-                    <th scope="col">E-mail</th>
+                        <td><%= contact.firstName  %></td>
+                        <td><%= contact.lastName  %></td>
+                        <td><%= contact.phoneNumber  %></td>
+                        <td><%= contact.email  %></td>
+                        <td><a href="/contact/<%= contact._id  %>" class="text-primary">Edit</a></td>
+                        <td><a href="/contact/delete/<%= contact._id  %>" class="text-danger">Delete</a></td>
                     </tr>
-                </thead>
-                <tr>
-                    <td>Bruno</td>
-                    <td>Petri</td>
-                    <td>48988229779</td>
-                    <td>brunoopetri@gmail.com</td>
-                </tr>
-        </div>
+                    <% }); %>
+                </table>
+            </div>
+        <% } else { %> 
+            <p class="text-center lead fw-bold">You don't have any contacts in your agenda.</p>
+            <div class="row">
+                <a href="/contact" class="btn btn-primary">Add contact</a>
+            </div>
+        <% } %> 
     </div>
 </div>
 

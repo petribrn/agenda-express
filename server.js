@@ -19,7 +19,7 @@ const path = require('path');
 const csrf = require('csurf');
 const {globalMiddleware} = require('./src/middlewares/globalMiddlewares');
 const {checkCsrfError, csrfMiddleware} = require('./src/middlewares/csrfMiddlewares');
-const {userSession} = require('./src/middlewares/userSessionMiddleware');
+const {userSession} = require('./src/middlewares/authMiddlewares');
 
 //----Middlewares section----
 app.use(express.json());

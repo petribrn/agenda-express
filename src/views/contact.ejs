@@ -1,0 +1,43 @@
+<%- include('includes/head');  %> 
+<%- include('includes/navbar'); %> 
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-center flex-column align-items-center">
+        <div class="col-8 mt-3">
+            <p class="h1 text-center">Contact</p>
+            <p class="text-center lead">Create or edit a contact below.</p>
+        </div>
+
+        <%- include('includes/messages') %> 
+        
+        <div class="col-md-4 m-2">
+        <% if(contact._id){ %> 
+            <form action="/contact/edit/<%= contact._id  %> " method="POST">
+        <% } else { %>
+            <form action="/contact/save-contact" method="POST">
+        <% } %> 
+                <input type="hidden" name="_csrf" value="<%= csrfToken  %>">
+                <div class="mb-3">
+                    <label for="name" class="form-label">First name</label>
+                    <input type="text" value="<%= contact.firstName %>" class="form-control" id="name" name="firstName">
+                </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Last name</label>
+                    <input type="text" value="<%= contact.lastName %>" class="form-control" id="name" name="lastName">
+                </div>
+                <div class="mb-3">
+                    <label for="phone-number" class="form-label">Phone number</label>
+                    <input type="tel" value="<%= contact.phoneNumber %>" class="form-control" id="phone-number" name="phoneNumber">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" value="<%= contact.email %>" class="form-control" id="email" name="email">
+                </div>
+                <button type="submit" class="btn btn-success" id="save-contact">Save</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<%- include('includes/footer');  %> 

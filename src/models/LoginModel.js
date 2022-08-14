@@ -57,7 +57,7 @@ class Auth{
         return false;
     }
 
-    async validateRegister(){
+    validateRegister(){
         this.cleanUp();
 
         if(!this.body.email && !this.body.password){
